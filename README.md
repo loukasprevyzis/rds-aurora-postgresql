@@ -7,7 +7,7 @@ I have selected to deploy a master-slave PosrgreSQL scenario, using Terraform (I
 
 I have used Terraform to deploy an PostgreSQL cluster on Amazon Web Services (AWS), specifically using the RDS service. 
 
-#####Requirements 
+##### Requirements 
 Note: Deployments were made using macOS 
 
 - AWS Account -> https://aws.amazon.com/console/ (You can sign up following this URL link)
@@ -17,7 +17,7 @@ Note: Deployments were made using macOS
 - If needed: to install `tfenv`, `homebrew` should be installed first -> `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 - Install `tfenv` -> `brew install tfenv`
 
-#####Pre-Deployment Tasks
+##### Pre-Deployment Tasks
 
 - `cd ` into the `rds` directory of the project 
 - set the db password in your terminal-> `export TF_VAR_db_password="<password>"`
@@ -26,29 +26,29 @@ Note: Deployments were made using macOS
 
 **WARNING** -> Passwords and usernames of the DB should be encrypted in a real-life scenario. 
 
-#####File Structure
-#####main.tf
+##### File Structure
+##### main.tf
 
 `main.tf` -> Consists of the main configuration that Terraform is reading to deploy a primary and a secondary cluster in RDS. This file also contains that AWS credentials of my personal account. **Please NOTE** that adding AWS credentials for terraform to pull into, is not standard practice and it would not be my choice in a real-life/production scenario. These credentials can either be kept locally and get Terraform to pull from there into order to access the AWS account (possible using a tf wrapper bash configuration). The credentials have only been added in the `main.tf` file due to time sensitivity and more efficiency for the purpose of this assignment. 
 
 The `main.tf` constists of VPC and Security Groups for PostgreSQL. These can also be added in a separate file structure in this project and can be applied with Terraform after the DB cluster is deployed. Instead, I have decided to deploy them in the same file, for the same justification mentioned above. 
 
-#####variables.tf
+##### variables.tf
 
 In this file, I have variabilized:
 - AWS region for where the deployment is going to take place 
 - The database password, which will be added as a variable module in the `main.tf` file. Please note that the password will be asked to be prompted when terraform executes its apply 
 
-#####outputs.tf
+##### outputs.tf
 Values for: 
 - RDS hostname
 - RDS instance port
 - RDS username  
 
-#####versions.tf
+##### versions.tf
 - Where the aws provider version is specified. 
 
-#####Post-Deployment Tasks (Setting up postgres)
+##### Post-Deployment Tasks (Setting up postgres)
 
 - Install `psql` cli tool with homebrew -> `brew install postgresql`
 - Go to the AWS Console to note down the Primary Instance's endpoint. We only need to configure the Primary node, as the secondary cluster replicates as the reader as shown in the screenshot below: 
